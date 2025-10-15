@@ -1,13 +1,21 @@
 import { prisma } from '@/lib/prisma'
 import { InsightCard } from '@/components/cards/insight-card'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getInsights() {
-  const insights = await prisma.insight.findMany({
-    where: { published: true },
-    orderBy: { createdAt: 'desc' },
-    take: 50,
-  })
-  return insights
+  try {
+    const insights = await prisma.insight.findMany({
+      where: { published: true },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    })
+    return insights
+  } catch (error) {
+    console.error('Failed to fetch insights:', error)
+    return []
+  }
 }
 
 export default async function InsightsPage() {

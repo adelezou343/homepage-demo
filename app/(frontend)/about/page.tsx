@@ -2,16 +2,30 @@ import { prisma } from '@/lib/prisma'
 import { Mail, Globe, User } from 'lucide-react'
 import Image from 'next/image'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getProfile() {
-  const profile = await prisma.profile.findFirst()
-  return profile || {
-    name: '您的名字',
-    bio: '这是您的个人简介，请在后台管理系统中编辑。\n\n' +
-      '您可以在这里介绍自己的背景、兴趣爱好、专业技能等。\n\n' +
-      '这个网站是您记录学习、分享思考的个人空间。',
-    avatar: null,
-    website: null,
-    email: null,
+  try {
+    const profile = await prisma.profile.findFirst()
+    return profile || {
+      name: '您的名字',
+      bio: '这是您的个人简介，请在后台管理系统中编辑。\n\n' +
+        '您可以在这里介绍自己的背景、兴趣爱好、专业技能等。\n\n' +
+        '这个网站是您记录学习、分享思考的个人空间。',
+      avatar: null,
+      website: null,
+      email: null,
+    }
+  } catch (error) {
+    console.error('Failed to fetch profile:', error)
+    return {
+      name: '您的名字',
+      bio: '这是您的个人简介，请在后台管理系统中编辑。',
+      avatar: null,
+      website: null,
+      email: null,
+    }
   }
 }
 

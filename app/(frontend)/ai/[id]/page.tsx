@@ -5,6 +5,9 @@ import ReactMarkdown from 'react-markdown'
 import { formatDate } from '@/lib/utils'
 import { Calendar, Tag } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 const categoryLabels: Record<string, string> = {
   SIDE_HUSTLE: 'AI副业',
   TIPS: 'AI技巧',
@@ -20,15 +23,20 @@ const categoryColors: Record<string, string> = {
 }
 
 async function getAIArticle(id: string) {
-  const article = await prisma.aIArticle.findUnique({
-    where: { id },
-  })
+  try {
+    const article = await prisma.aIArticle.findUnique({
+      where: { id },
+    })
 
-  if (!article || !article.published) {
+    if (!article || !article.published) {
+      notFound()
+    }
+
+    return article
+  } catch (error) {
+    console.error('Failed to fetch AI article:', error)
     notFound()
   }
-
-  return article
 }
 
 export default async function AIArticlePage({

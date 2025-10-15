@@ -5,16 +5,24 @@ import ReactMarkdown from 'react-markdown'
 import { formatDate } from '@/lib/utils'
 import { Calendar, Heart } from 'lucide-react'
 
-async function getInsight(id: string) {
-  const insight = await prisma.insight.findUnique({
-    where: { id },
-  })
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
-  if (!insight || !insight.published) {
+async function getInsight(id: string) {
+  try {
+    const insight = await prisma.insight.findUnique({
+      where: { id },
+    })
+
+    if (!insight || !insight.published) {
+      notFound()
+    }
+
+    return insight
+  } catch (error) {
+    console.error('Failed to fetch insight:', error)
     notFound()
   }
-
-  return insight
 }
 
 export default async function InsightPage({

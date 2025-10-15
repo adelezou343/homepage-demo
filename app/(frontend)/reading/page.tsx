@@ -1,13 +1,21 @@
 import { prisma } from '@/lib/prisma'
 import { ReadingCard } from '@/components/cards/reading-card'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getReadingNotes() {
-  const notes = await prisma.readingNote.findMany({
-    where: { published: true },
-    orderBy: { createdAt: 'desc' },
-    take: 50,
-  })
-  return notes
+  try {
+    const notes = await prisma.readingNote.findMany({
+      where: { published: true },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    })
+    return notes
+  } catch (error) {
+    console.error('Failed to fetch reading notes:', error)
+    return []
+  }
 }
 
 export default async function ReadingPage() {

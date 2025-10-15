@@ -5,16 +5,24 @@ import ReactMarkdown from 'react-markdown'
 import { formatDate } from '@/lib/utils'
 import { Calendar, BookOpen, User } from 'lucide-react'
 
-async function getReadingNote(id: string) {
-  const note = await prisma.readingNote.findUnique({
-    where: { id },
-  })
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
-  if (!note || !note.published) {
+async function getReadingNote(id: string) {
+  try {
+    const note = await prisma.readingNote.findUnique({
+      where: { id },
+    })
+
+    if (!note || !note.published) {
+      notFound()
+    }
+
+    return note
+  } catch (error) {
+    console.error('Failed to fetch reading note:', error)
     notFound()
   }
-
-  return note
 }
 
 export default async function ReadingNotePage({
