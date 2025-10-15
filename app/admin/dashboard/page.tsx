@@ -71,7 +71,7 @@ export default async function AdminDashboardPage() {
 
       {/* 统计卡片 */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {modules.map((module) => {
+        {modules.map((module: any) => {
           const Icon = module.icon
           return (
             <Link key={module.href} href={module.href}>

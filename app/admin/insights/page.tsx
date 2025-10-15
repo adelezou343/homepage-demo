@@ -48,7 +48,7 @@ export default async function AdminInsightsPage() {
                 </td>
               </tr>
             ) : (
-              insights.map((insight) => (
+              insights.map((insight: any) => (
                 <tr key={insight.id} className="border-t border-border hover:bg-muted/30">
                   <td className="px-6 py-4">
                     <div className="font-medium">{insight.title}</div>

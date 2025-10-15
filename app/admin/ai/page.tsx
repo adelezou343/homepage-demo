@@ -55,7 +55,7 @@ export default async function AdminAIPage() {
                 </td>
               </tr>
             ) : (
-              articles.map((article) => (
+              articles.map((article: any) => (
                 <tr key={article.id} className="border-t border-border hover:bg-muted/30">
                   <td className="px-6 py-4">
                     <div className="font-medium">{article.title}</div>

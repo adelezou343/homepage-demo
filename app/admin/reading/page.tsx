@@ -48,7 +48,7 @@ export default async function AdminReadingPage() {
                 </td>
               </tr>
             ) : (
-              notes.map((note) => (
+              notes.map((note: any) => (
                 <tr key={note.id} className="border-t border-border hover:bg-muted/30">
                   <td className="px-6 py-4">
                     <div className="font-medium">{note.title}</div>
