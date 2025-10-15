@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📝 个人网站项目
 
-## Getting Started
+一个基于 Next.js 15 构建的现代化个人网站，支持读书笔记、AI 探索、生活感悟等内容分享。
 
-First, run the development server:
+## ✨ 特性
+
+- 🎨 **现代化设计** - 简洁美观的 UI 界面
+- 🌓 **主题切换** - 支持深色/浅色模式
+- 📱 **响应式布局** - 完美适配移动端和桌面端
+- 📚 **内容模块**
+  - 读书笔记 - 记录阅读心得
+  - AI 成长 - 4 个分类（副业、技巧、智能体、编程）
+  - 体悟成长 - 生活感悟日记
+  - 个人介绍 - 展示个人信息
+- ✍️ **Markdown 支持** - 使用 Markdown 编写内容
+- 🎭 **动画效果** - 流畅的页面过渡动画
+
+## 🛠️ 技术栈
+
+- **框架**: Next.js 15 (App Router)
+- **语言**: TypeScript
+- **样式**: TailwindCSS
+- **数据库**: Prisma + SQLite
+- **动画**: Framer Motion
+- **Markdown**: React Markdown
+- **图标**: Lucide React
+
+## 🚀 快速开始
+
+### 1. 安装依赖
+
+```bash
+npm install
+```
+
+### 2. 启动开发服务器
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+访问 [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. 添加内容
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+使用 Prisma Studio 管理数据：
 
-## Learn More
+```bash
+npx prisma studio
+```
 
-To learn more about Next.js, take a look at the following resources:
+详细使用指南请查看 [GUIDE.md](./GUIDE.md)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 项目结构
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+├── app/
+│   ├── (frontend)/      # 前台页面
+│   ├── api/             # API 路由
+│   └── layout.tsx       # 根布局
+├── components/          # React 组件
+├── lib/                 # 工具库
+├── prisma/              # 数据库配置
+└── public/              # 静态资源
+```
 
-## Deploy on Vercel
+## 🎯 核心功能
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 首页
+- Hero 展示区
+- 模块导航卡片
+- 统计数据展示
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 内容模块
+- 卡片式列表展示
+- Markdown 内容渲染
+- 图片支持
+- 分类筛选（AI 模块）
+
+### 主题系统
+- 深色/浅色主题
+- 系统主题跟随
+- 平滑过渡效果
+
+## 📝 待开发
+
+- [ ] 后台管理系统
+- [ ] 图片上传功能
+- [ ] 评论系统（可选）
+- [ ] 搜索功能
+- [ ] RSS 订阅
+
+## 🔧 开发命令
+
+```bash
+npm run dev      # 启动开发服务器
+npm run build    # 构建生产版本
+npm start        # 启动生产服务器
+```
+
+## 📄 许可证
+
+MIT
+
+---
+
+如需详细的使用教程，请查看 [使用指南](./GUIDE.md)

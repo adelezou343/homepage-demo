@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 个人信息
+model Profile {
+  id        String   @id @default(cuid())
+  name      String
+  bio       String?
+  avatar    String?
+  website   String?
+  email     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 读书笔记
+model ReadingNote {
+  id          String   @id @default(cuid())
+  title       String
+  bookName    String
+  author      String?
+  content     String   // Markdown 内容
+  coverImage  String?
+  images      String?  // JSON 数组存储多张图片
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// AI 文章（包含 4 个分类）
+model AIArticle {
+  id          String      @id @default(cuid())
+  title       String
+  content     String      // Markdown 内容
+  category    AICategory  // 分类：副业、技巧、智能体、编程
+  coverImage  String?
+  images      String?     // JSON 数组存储多张图片
+  published   Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+enum AICategory {
+  SIDE_HUSTLE  // AI副业
+  TIPS         // AI技巧
+  AGENTS       // AI智能体
+  CODING       // AI编程
+}
+
+// 体悟成长日记
+model Insight {
+  id          String   @id @default(cuid())
+  title       String
+  content     String   // Markdown 内容
+  mood        String?  // 心情标签
+  coverImage  String?
+  images      String?  // JSON 数组存储多张图片
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// 管理员账户
+model Admin {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String   // 加密后的密码
+  createdAt DateTime @default(now())
+}
