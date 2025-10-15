@@ -74,40 +74,86 @@ npm run dev
 
 ## 🌐 部署到 Vercel
 
-### 方式一：通过 Vercel Dashboard
+### 重要提示
+
+⚠️ **生产环境必须使用 PostgreSQL**，SQLite 不支持 Vercel 部署。
+
+### 步骤 1：准备数据库
+
+选择一个 PostgreSQL 数据库服务：
+- [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres) ⭐ 推荐
+- [Neon](https://neon.tech/) - 免费额度大
+- [Supabase](https://supabase.com/) - 功能丰富
+- [Railway](https://railway.app/) - 简单易用
+
+获取 PostgreSQL 连接字符串，格式类似：
+```
+postgresql://user:password@host:5432/database?sslmode=require
+```
+
+### 步骤 2：部署到 Vercel
+
+#### 方式一：通过 Vercel Dashboard
 
 1. 登录 [Vercel](https://vercel.com)
-2. 导入 GitHub 仓库
-3. 在 **Environment Variables** 中添加：
+2. 点击 "New Project"
+3. 导入你的 GitHub 仓库
+4. 在 **Environment Variables** 中添加：
    ```
-   DATABASE_URL=your_database_url_here
-   JWT_SECRET=your_jwt_secret_here
+   DATABASE_URL=postgresql://...（你的 PostgreSQL 连接字符串）
+   JWT_SECRET=your-random-secret-key-here
    ```
-4. 点击 Deploy
+5. 点击 "Deploy"
 
-### 方式二：使用 Vercel CLI
+#### 方式二：使用 Vercel CLI
 
 ```bash
 # 安装 Vercel CLI
 npm i -g vercel
 
+# 登录
+vercel login
+
 # 部署
 vercel
 
 # 添加环境变量
-vercel env add DATABASE_URL
-vercel env add JWT_SECRET
+vercel env add DATABASE_URL production
+# 输入你的 PostgreSQL 连接字符串
+
+vercel env add JWT_SECRET production
+# 输入随机密钥
 ```
 
-### 数据库推荐
+### 步骤 3：初始化生产数据库
 
-部署到生产环境建议使用：
-- [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres)
-- [Neon](https://neon.tech/)
-- [PlanetScale](https://planetscale.com/)
-- [Supabase](https://supabase.com/)
+部署成功后，在本地运行：
 
-> **注意**：SQLite 不支持 Vercel 部署，需要使用 PostgreSQL 或 MySQL。
+```bash
+# 使用生产数据库连接字符串
+DATABASE_URL="postgresql://..." npx prisma db push
+
+# 创建管理员账号（可选）
+DATABASE_URL="postgresql://..." node prisma/create-admin.js
+```
+
+### 本地开发配置
+
+如果想在本地使用 SQLite：
+
+1. 编辑 `prisma/schema.prisma`，修改数据源：
+```prisma
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+```
+
+2. 重新生成 Prisma Client：
+```bash
+npx prisma generate
+npx prisma db push
+```
 
 
 
