@@ -27,13 +27,37 @@
 
 ## 🚀 快速开始
 
-### 1. 安装依赖
+### 1. 环境配置
+
+复制 `.env.example` 为 `.env`：
+
+```bash
+cp .env.example .env
+```
+
+### 2. 安装依赖
 
 ```bash
 npm install
 ```
 
-### 2. 启动开发服务器
+### 3. 初始化数据库
+
+```bash
+# 生成 Prisma Client
+npx prisma generate
+
+# 初始化数据库
+npx prisma db push
+
+# 创建管理员账号（账号：admin，密码：admin123）
+node prisma/create-admin.js
+
+# （可选）导入测试数据
+node prisma/seed.js
+```
+
+### 4. 启动开发服务器
 
 ```bash
 npm run dev
@@ -41,15 +65,51 @@ npm run dev
 
 访问 [http://localhost:3000](http://localhost:3000)
 
-### 3. 添加内容
+### 5. 访问后台管理
 
-使用 Prisma Studio 管理数据：
+访问 [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
+
+- 用户名：`admin`
+- 密码：`admin123`
+
+## 🌐 部署到 Vercel
+
+### 方式一：通过 Vercel Dashboard
+
+1. 登录 [Vercel](https://vercel.com)
+2. 导入 GitHub 仓库
+3. 在 **Environment Variables** 中添加：
+   ```
+   DATABASE_URL=your_database_url_here
+   JWT_SECRET=your_jwt_secret_here
+   ```
+4. 点击 Deploy
+
+### 方式二：使用 Vercel CLI
 
 ```bash
-npx prisma studio
+# 安装 Vercel CLI
+npm i -g vercel
+
+# 部署
+vercel
+
+# 添加环境变量
+vercel env add DATABASE_URL
+vercel env add JWT_SECRET
 ```
 
-详细使用指南请查看 [GUIDE.md](./GUIDE.md)
+### 数据库推荐
+
+部署到生产环境建议使用：
+- [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres)
+- [Neon](https://neon.tech/)
+- [PlanetScale](https://planetscale.com/)
+- [Supabase](https://supabase.com/)
+
+> **注意**：SQLite 不支持 Vercel 部署，需要使用 PostgreSQL 或 MySQL。
+
+
 
 ## 📁 项目结构
 
